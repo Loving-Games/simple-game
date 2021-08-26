@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+	<div id="score"></div>
+	<div id="userInput"></div>
+	<button id="start">Start Game</button>
+	<script>
+		let score = 0
+		const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+
+		function askUser() {
+			const generatedNumber = random(1, 10)
+			let userInput = parseInt(prompt("What is your guess? (Enter number [1,10])"))
+			addUserInputs(userInput)
+			let point = 0
+			if (generatedNumber === userInput) {
+				point = 2
+			} else if (userInput - generatedNumber === 1 || userInput - generatedNumber === -1) {
+				point = 1
+			}
+			score += point
+			const playMore = confirm(`Generated Number was ${generatedNumber}:, You get ${point} points. Do you want to continue the game?`)
+			if (playMore) {
+				askUser()
+			} else {
+				alert(`Your score is ${score}`)
+			}
+		}
+		function addUserInputs(userInput) {
+			const userInputEl = document.createElement("div")
+			userInputEl.innerText = `User entered: ${userInput}`
+			document.getElementById("userInput").appendChild(userInputEl)
+		}
+		function updateScore(x) {
+			document.getElementById("score").innerText = x
+		}
+		document.getElementById("start").addEventListener("click", askUser)
+	</script>
+</body>
+
+</html>
